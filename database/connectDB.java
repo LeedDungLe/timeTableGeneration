@@ -1,7 +1,7 @@
 package database;
 
-import model.giaoVien;
-import model.monHoc;
+import model.*;
+
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -48,6 +48,25 @@ public class connectDB {
         }
         return monHocs;
     }
+    
+    public ArrayList<monHocGV> getMonHocGVs(){
+        conn = openConnection();
+        ArrayList<monHocGV>  monHocGVs = new ArrayList<>();
+        String query = "SELECT * FROM monhoc";
+
+        try {
+            PreparedStatement ps =  conn.prepareCall(query);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                monHocGV monhocgv = new monHocGV(rs.getInt("id"));
+                monHocGVs.add(monhocgv);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return monHocGVs;
+    }
 
     public ArrayList<monHoc> getMonHocPhuTrach(int IDgiaovien){
         conn = openConnection();
@@ -86,7 +105,7 @@ public class connectDB {
         return giaoViens;
     }
 
-    public ArrayList<giaoVien> getGiaoVienPhuTrach( int IDmonhoc){
+    public ArrayList<giaoVien> getGiaoVienPhuTrachs( int IDmonhoc){
         conn = openConnection();
         giaoViens = new ArrayList<>();
         String query = "SELECT giaovien.* FROM giaovien,phutrach WHERE giaovien.id=phutrach.giaovien_id and phutrach.monhoc_id = "+ IDmonhoc;
@@ -103,5 +122,26 @@ public class connectDB {
         }
         return giaoViens;
     }
+    
+    public giaoVien getGiaoVienPhuTrach( int IDmonhoc){
+        conn = openConnection();
+        giaoVien gv = new giaoVien();
+        String query = "SELECT giaovien.* FROM giaovien,phutrach WHERE giaovien.id=phutrach.giaovien_id and phutrach.monhoc_id = "+ IDmonhoc;
+        try {
+            PreparedStatement ps =  conn.prepareCall(query);
+            ResultSet rs = ps.executeQuery();
+            
+            if(rs.next()) {
+                gv = new giaoVien(rs.getInt("id"),rs.getString("ten"));
+               
+            }    
+           
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return gv;
+    }
+    
 
 }

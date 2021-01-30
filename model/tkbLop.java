@@ -6,10 +6,12 @@ import java.util.Random;
 
 import static hangSo.cacHangSo.SO_NGAY_TRONG_TUAN;
 import static hangSo.cacHangSo.SO_TIET;
+import java.util.Collection;
+import java.util.Collections;
 
 public class tkbLop {
 
-    private boolean acceptable = false;
+  private boolean acceptable = false;
     private List<monHocTrongNgay> tkb = new ArrayList<>(SO_NGAY_TRONG_TUAN);
 
     public tkbLop(List<monHocTrongNgay> tkb) {
@@ -19,7 +21,13 @@ public class tkbLop {
     public tkbLop() {
     }
 
+    public tkbLop(tkbLop temp) {
+        this.tkb = temp.gettkb();
+    }
 
+
+    
+    
     public List<monHocTrongNgay> gettkb() {
         return tkb;
     }
@@ -52,13 +60,15 @@ public class tkbLop {
 
 
     public void khuTrungLapMon(){
+        KhoiTaoTkbLop();
         int[] sumScore = {0,0,0,0,0,0};
-        for (int i = 0; i <SO_NGAY_TRONG_TUAN; i++){
-            sumScore[i] = tkb.get(i).getSumScore();
-        }
+        
 
 
         while (acceptable != true){
+            for (int i = 0; i <SO_NGAY_TRONG_TUAN; i++){
+                sumScore[i] = tkb.get(i).getSumScore();
+            }
             for (int i = 0; i <SO_NGAY_TRONG_TUAN; i++){
 
                 // 4 môn toán trong một ngày
@@ -114,6 +124,7 @@ public class tkbLop {
                 }
                 // 2 môn giống nhau có số lượng tiết yêu cầu trong tuần là 2
                 if(sumScore[i] == 2){
+                    System.out.println("HHHHHHHHHHHHHHHHHHHHHHHH");
                     for (int j=0; j < SO_TIET; j++){
                         if(tkb.get(i).getMonHocs().get(j).getScore() == 1 && tkb.get(i).getMonHocs().get(j).getSoMonMoiTuan() == 2){
                             int rand = random(i);
@@ -133,21 +144,16 @@ public class tkbLop {
 
                             sumScore[i] = tkb.get(i).getSumScore();
                             sumScore[rand] = tkb.get(rand).getSumScore();
-
+                             
                             break;
                         }
                     }
                 }
             }
-             showScore();
+             //showScore();
             acceptable = kiemTraAcceptableTKB(tkb);
             if (acceptable == false){
-                for (int i = 0; i <SO_NGAY_TRONG_TUAN; i++){
-                    for (int j=0; j < SO_TIET; j++){
-                        System.out.print(tkb.get(i).getMonHocs().get(j).getTen()+"("+tkb.get(i).getMonHocs().get(j).getScore()+")"+" | ");
-                    }
-                    System.out.println();
-                }
+                //showTimeTable();
             }
         }
 
@@ -162,7 +168,10 @@ public class tkbLop {
     public boolean kiemTraAcceptableTKB(List<monHocTrongNgay> tkb){
         for (int i = 0; i < 6; i++){
             tkb.get(i).kiemTraAcceptableNgay();
-            if(tkb.get(i).isAcceptableNgay() == false) return false;
+            if(tkb.get(i).isAcceptableNgay() == false) {
+                System.out.println("false at i = "+ i);
+                return false;
+            }
         }
         return true;
     }
@@ -180,5 +189,17 @@ public class tkbLop {
         int rnd = new Random().nextInt(6);
         if(i == rnd) return (i+1)%6;
         else return rnd;
+    }
+    public void showTimeTable(){
+        for (int i = 0; i <SO_NGAY_TRONG_TUAN; i++){
+                    for (int j=0; j < SO_TIET; j++){
+                        System.out.print(tkb.get(i).getMonHocs().get(j).getTen()+"("+tkb.get(i).getMonHocs().get(j).getScore()+")"+" | ");
+                    }
+                    System.out.println();
+                }
+    }
+    
+    public void XaoTron(){
+        Collections.shuffle(tkb);
     }
 }

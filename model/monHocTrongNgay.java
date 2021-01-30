@@ -82,15 +82,20 @@ public class monHocTrongNgay {
     }
 
     public void kiemTraAcceptableNgay(){
+        this.AcceptableNgay = true;
         if(this.sumScore == 2){
             for (int j=0; j < SO_TIET; j++){
                 if(monHocs.get(j).getScore() == 1 && monHocs.get(j).getSoMonMoiTuan() == 2){
-                    this.AcceptableNgay = false;
+                    this.AcceptableNgay = false; 
                 }
             }
         }
-        if(this.sumScore >= 3) this.AcceptableNgay = false;
-        this.AcceptableNgay = true;
+         if(this.sumScore >= 3) this.AcceptableNgay = false;
+        
+    }
+    
+    public void xaoTron(){
+        Collections.shuffle(monHocs);
     }
 
     @Override

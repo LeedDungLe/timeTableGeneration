@@ -8,7 +8,7 @@ public class monHoc {
     private String ten;
     private int soMonMoiTuan;
     private int score = 0;
-    private ArrayList<giaoVien> giaoViens;
+    private giaoVien giaoViens;
 
 
 
@@ -25,14 +25,14 @@ public class monHoc {
         this.giaoViens = mh.getGiaoViens();
     }
 
-    public monHoc(int ID, String ten, int soMonMoiTuan, ArrayList<giaoVien> giaoViens) {
+    public monHoc(int ID, String ten, int soMonMoiTuan, giaoVien giaoViens) {
         this.ID = ID;
         this.ten = ten;
         this.soMonMoiTuan = soMonMoiTuan;
         this.giaoViens = giaoViens;
     }
 
-    public monHoc(int ID, String ten, int soMonMoiTuan, int score, ArrayList<giaoVien> giaoViens) {
+    public monHoc(int ID, String ten, int soMonMoiTuan, int score, giaoVien giaoViens) {
         this.ID = ID;
         this.ten = ten;
         this.soMonMoiTuan = soMonMoiTuan;
@@ -79,14 +79,15 @@ public class monHoc {
         this.soMonMoiTuan = soMonMoiTuan;
     }
 
-    public ArrayList<giaoVien> getGiaoViens() {
+    public giaoVien getGiaoViens() {
         return giaoViens;
     }
 
-    public void setGiaoViens(ArrayList<giaoVien> giaoViens) {
+    public void setGiaoViens(giaoVien giaoViens) {
         this.giaoViens = giaoViens;
     }
 
+    
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

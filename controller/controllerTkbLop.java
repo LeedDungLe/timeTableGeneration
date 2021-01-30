@@ -29,6 +29,7 @@ public class controllerTkbLop {
          for( monHoc mh :  temp) {
              for (int i = 0; i < mh.getSoMonMoiTuan(); i++){
                  monHoc monHoc = new monHoc(mh);
+                 monHoc.setGiaoViens(db.getGiaoVienPhuTrach(monHoc.getID()));
                  monHocs.add(monHoc);
              }
          }
@@ -37,25 +38,18 @@ public class controllerTkbLop {
 
 
     // Tao tkb cho mot lop thoa man cac rang buoc trong mot lop
-    public tkbLop taoTKBLop(/*ArrayList<monHoc> monHocs*/){
+    public tkbLop taoTKBLop(ArrayList<monHoc> monHocs){
         tkbLop = new tkbLop();
 
-        ArrayList<monHoc> monHocs = getAllMonHoc();
+       // ArrayList<monHoc> monHocs = getAllMonHoc();
         //xao tron 24 mon hoc
         Collections.shuffle(monHocs);
 
         tkbLop.getValues(monHocs);
-
-        tkbLop.KhoiTaoTkbLop();
+    
         tkbLop.khuTrungLapMon();
 
-        //HIen thi de kiem tra
-        for (int i = 0; i <SO_NGAY_TRONG_TUAN; i++){
-            for (int j=0; j < SO_TIET; j++){
-                System.out.print(tkbLop.gettkb().get(i).getMonHocs().get(j).getTen()+"("+tkbLop.gettkb().get(i).getMonHocs().get(j).getScore()+")"+" | ");
-            }
-            System.out.println();
-        }
+        //tkbLop.showTimeTable();
 
         return  tkbLop;
     }
